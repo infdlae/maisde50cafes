@@ -16,6 +16,29 @@ const CONFIG = {
 
 const CAMPAIGN_PARAMS = ["utm_source","utm_medium","utm_campaign","utm_content","utm_term","fbclid"];
 
+function parseBrl(value) {
+  if (!value) return NaN;
+  const normalized = String(value)
+    .replace(/[^\d,.-]/g, "")
+    .replace(/\./g, "")
+    .replace(",", ".");
+  return Number(normalized);
+}
+
+function formatBrl(value) {
+  return new Intl.NumberFormat("pt-BR", {
+    style: "currency",
+    currency: "BRL"
+  }).format(value);
+}
+
+function calculateSavings() {
+  const from = parseBrl(CONFIG.PRICE_FROM);
+  const current = parseBrl(CONFIG.PRICE_CURRENT);
+  if (!Number.isFinite(from) || !Number.isFinite(current) || from <= current) return "";
+  return `Economize ${formatBrl(from - current)}`;
+}
+
 function formatCheckoutUrl(baseUrl) {
   if (!baseUrl || baseUrl === "#") return "#";
   try {
@@ -41,7 +64,8 @@ function applyConfig() {
   const map = {
     productName: CONFIG.PRODUCT_NAME,
     priceFrom: CONFIG.PRICE_FROM,
-    priceCurrent: CONFIG.PRICE_CURRENT
+    priceCurrent: CONFIG.PRICE_CURRENT,
+    savings: calculateSavings()
   };
   document.querySelectorAll("[data-config]").forEach((el) => {
     const key = el.dataset.config;
@@ -68,11 +92,29 @@ function applyConfig() {
   const canonical = document.getElementById("canonicalLink");
   if (canonical && CONFIG.SITE_URL) canonical.href = CONFIG.SITE_URL;
 
-  document.querySelector('[data-config-link="privacyUrl"]').href = CONFIG.PRIVACY_URL;
-  document.querySelector('[data-config-link="termsUrl"]').href = CONFIG.TERMS_URL;
-  document.querySelector('[data-config-link="supportUrl"]').href = CONFIG.SUPPORT_URL;
+  const legalLinks = [
+    ["privacyUrl", CONFIG.PRIVACY_URL],
+    ["termsUrl", CONFIG.TERMS_URL],
+    ["supportUrl", CONFIG.SUPPORT_URL]
+  ];
+  legalLinks.forEach(([key, url]) => {
+    const link = document.querySelector(`[data-config-link="${key}"]`);
+    if (!link) return;
+    if (!url || url === "#") {
+      link.hidden = true;
+      return;
+    }
+    link.href = url;
+  });
+
   const contact = document.getElementById("contactLink");
-  contact.href = CONFIG.SUPPORT_EMAIL ? `mailto:${CONFIG.SUPPORT_EMAIL}` : "#";
+  if (contact) {
+    if (CONFIG.SUPPORT_EMAIL) {
+      contact.href = `mailto:${CONFIG.SUPPORT_EMAIL}`;
+    } else {
+      contact.hidden = true;
+    }
+  }
 }
 
 function setupCountdown() {
