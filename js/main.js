@@ -8,7 +8,7 @@ const CONFIG = {
   CHECKOUT_URL: "https://pay.cakto.com.br/p7tieao_1118468",
   OFFER_END_DATE: "", // Ex.: "2026-12-31T23:59:59-03:00". Deixe vazio para ocultar o cronômetro.
   SUPPORT_EMAIL: "",
-  SITE_URL: "https://SEU-DOMINIO-AQUI/",
+  SITE_URL: "https://infdlae.github.io/maisde50cafes/",
   PRIVACY_URL: "#",
   TERMS_URL: "#",
   SUPPORT_URL: "#"
@@ -140,28 +140,23 @@ function setupScrollUi() {
   const header = document.getElementById("siteHeader");
   const back = document.getElementById("backToTop");
   const sticky = document.getElementById("stickyCta");
-  const largeCtas = document.querySelectorAll("#oferta-1 .checkout-link, #oferta-2 .checkout-link, .hero-actions .checkout-link");
+
+  // O CTA flutuante permanece disponível durante toda a navegação.
+  // Ele não é ocultado quando outros CTAs entram no viewport.
+  if (sticky) sticky.classList.remove("hidden");
 
   const onScroll = () => {
-    header.classList.toggle("scrolled", window.scrollY > 20);
-    back.classList.toggle("visible", window.scrollY > 700);
-    if (window.scrollY < Math.min(window.innerHeight * 0.72, 620)) sticky.classList.add("hidden");
+    if (header) header.classList.toggle("scrolled", window.scrollY > 20);
+    if (back) back.classList.toggle("visible", window.scrollY > 700);
   };
+
   onScroll();
   window.addEventListener("scroll", onScroll, { passive: true });
-  back.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
 
-  if ("IntersectionObserver" in window) {
-    const visibleCtas = new Set();
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => entry.isIntersecting ? visibleCtas.add(entry.target) : visibleCtas.delete(entry.target));
-      const beforeSticky = window.scrollY < Math.min(window.innerHeight * 0.72, 620);
-      sticky.classList.toggle("hidden", visibleCtas.size > 0 || beforeSticky);
-    }, { threshold: 0.55 });
-    largeCtas.forEach((el) => observer.observe(el));
+  if (back) {
+    back.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
   }
 }
-
 
 function setupTypewriter() {
   const targets = document.querySelectorAll("[data-typewriter]");
