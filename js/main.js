@@ -322,7 +322,7 @@ document.addEventListener("DOMContentLoaded", () => {
   setupReveal();
   setupScrollUi();
   setupMenu();
-  setupTypewriter();
+  // Hero headline is rendered immediately; the typewriter effect is disabled.
   setupCoffeeCarousel();
   setupHeroTilt();
   trackEvent("PageView");
