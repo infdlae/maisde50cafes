@@ -24,6 +24,8 @@
   <link rel="icon" href="favicon/favicon.svg" type="image/svg+xml">
   <link rel="preload" as="image" href="assets/images/book-deliverable.webp" type="image/webp">
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/coffee-scroll.css">
+  <link rel="stylesheet" href="css/coffee-offer.css">
 
   <!-- META PIXEL / TRACKING
     Insira aqui o snippet oficial do Meta Pixel quando houver um Pixel ID real.
@@ -78,14 +80,14 @@
       <div class="container hero-grid">
         <div class="hero-copy hero-copy-centered reveal">
           <span class="eyebrow">Descoberta em cada xícara</span>
-          <h1 class="hero-typewriter" data-typewriter="Seu café de sempre não precisa ser sempre igual." aria-label="Seu café de sempre não precisa ser sempre igual.">Seu café de sempre não precisa ser sempre igual.</h1>
+          <h1 class="hero-typewriter" aria-label="Seu café de sempre não precisa ser sempre igual.">Seu café de sempre não precisa ser sempre igual.</h1>
           <p class="hero-lead">Conheça <strong>50+ maneiras de fazer café</strong> em um guia digital pensado para quem quer variar a rotina, experimentar novas ideias e aproveitar melhor esse ritual — sem precisar complicar.</p>
 
           <div class="hero-price-chip" aria-label="Preço atual do guia"><span data-price-from-wrap>De <s data-config="priceFrom">R$ 99,90</s></span><strong data-config="priceCurrent">R$ 24,99</strong><em data-config="savings">Economize R$ 74,91</em></div>
 
           <div class="hero-actions">
             <a class="btn btn-elevated checkout-link" href="#" data-cta="hero">
-              Quero acessar por <span data-config="priceCurrent">R$ 24,99</span>
+              Acessar Agora
             </a>
             <p class="microcopy">Material digital • sem frete • acesso online • pagamento em checkout externo</p>
           </div>
@@ -414,6 +416,22 @@
 
   <button class="back-to-top" id="backToTop" type="button" aria-label="Voltar ao topo">↑</button>
 
+
+  <div class="coffee-offer-overlay" id="coffeeOfferOverlay" hidden></div>
+  <section class="coffee-offer-dialog" id="coffeeOfferDialog" role="dialog" aria-modal="true" aria-labelledby="coffeeOfferTitle" aria-describedby="coffeeOfferDescription" hidden>
+    <button class="coffee-offer-close" type="button" id="coffeeOfferClose" aria-label="Fechar oferta">×</button>
+    <span class="eyebrow">Sua próxima xícara começa com uma ideia nova</span>
+    <h2 id="coffeeOfferTitle">50+ Maneiras de Fazer Café</h2>
+    <p id="coffeeOfferDescription">Descubra novos jeitos de preparar, combinar e aproveitar café no dia a dia.</p>
+    <p class="coffee-offer-old" data-price-from-wrap>De <s data-config="priceFrom">R$ 99,90</s></p>
+    <p class="coffee-offer-now">Por apenas <strong data-config="priceCurrent">R$ 24,99</strong></p>
+    <p class="coffee-offer-save" data-config="savings">Economize R$ 74,91</p>
+    <a class="btn btn-elevated checkout-link" href="#" data-cta="popup">Acessar o guia por <span data-config="priceCurrent">R$ 24,99</span></a>
+    <p class="coffee-offer-fine">Produto digital • sem frete • acesso online • checkout externo</p>
+  </section>
+
   <script src="js/main.js" defer></script>
+  <script src="js/coffee-scroll.js" defer></script>
+  <script src="js/coffee-offer.js" defer></script>
 </body>
 </html>
